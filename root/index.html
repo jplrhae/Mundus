@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Signika:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="css/index.css" />
+    <script defer src="js/index.js"></script>
+    <title>Mundus</title>
+  </head>
+  <body>
+    <nav class="navbar border-bottom border-dark border-3">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-size: 70px">
+          <img
+            src="img/mundus-logo.png"
+            alt="Logo"
+            width="90"
+            height="90"
+            class="d-inline-block align-text-top"
+          />
+          Mundus<span style="font-size: 45px"
+            >, your personal guide to planet Earth.</span
+          >
+        </a>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row text-center mt-3">
+        <div class="col-4"></div>
+        <div class="col-4">
+          <form class="d-flex" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              id="search-input"
+            />
+            <button class="btn btn-light" type="submit" disabled id="search-submit-btn">
+              <img src="img/airplane.png" alt="Logo" width="50" height="50" />
+            </button>
+          </form>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row mt-3 text-center">
+        <div class="col-6 text-end pe-0">
+          <div class="dropdown">
+            <button
+              class="btn btn-dark dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              id="search-button"
+            >
+              Find country by
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Name</a></li>
+              <li><a class="dropdown-item" href="#">Code</a></li>
+              <li><a class="dropdown-item" href="#">Currency</a></li>
+              <li><a class="dropdown-item" href="#">Language</a></li>
+              <li><a class="dropdown-item" href="#">Capital city</a></li>
+              <li><a class="dropdown-item" href="#">Region</a></li>
+              <li><a class="dropdown-item" href="#">Subregion</a></li>
+              <li><a class="dropdown-item" href="#">Denonym</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col text-start ps-1">
+          <button
+            type="button"
+            class="btn"
+            data-bs-toggle="tooltip"
+            data-bs-placement="top"
+            title="Select the type of search you want to do."
+            id="tooltip-button"
+          >
+            <img src="img/info.png" alt="info" width="25" height="25" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
