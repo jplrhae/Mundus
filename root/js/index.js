@@ -5,14 +5,21 @@ addSearchFieldListener();
 function addSearchFieldListener() {
   const searchTextfield = document.querySelector("#search-input");
   searchTextfield.addEventListener("input", function (evt) {
-    const searchTypeDropdown = document.querySelector(".dropdown-item");
-    if (searchTypeDropdown.innerHTML != 'Find country by' && this.value != '') {
-      const searchBtn = document.querySelector('#search-submit-btn');
-      searchBtn.removeAttribute('disabled');
-    }
+    const searchBtn = document.querySelector("#search-button");
 
-
+    setSearchSubmitBtnEnable(this, searchBtn);
   });
+}
+
+function setSearchSubmitBtnEnable(searchTextField, searchBtn) {
+  const searchBtnText = searchBtn.innerHTML.trim();
+  const searchSubmitBtn = document.querySelector("#search-submit-btn");
+
+  if (searchTextField.value == "") {
+    searchSubmitBtn.setAttribute("disabled", "");
+  } else if (searchBtnText != "Find country by") {
+    searchSubmitBtn.removeAttribute("disabled");
+  }
 }
 
 function addDropdownItemsListeners() {
@@ -20,10 +27,12 @@ function addDropdownItemsListeners() {
 
   dropdownItems.forEach((item) => {
     item.addEventListener("click", () => {
+      const searchTextfield = document.querySelector("#search-input")
       const searchType = item.innerHTML;
       const searchBtn = document.querySelector("#search-button");
       searchBtn.innerHTML = searchType;
       updateInfoTooltip(searchType);
+      setSearchSubmitBtnEnable(searchTextfield, searchBtn);
     });
   });
 }
