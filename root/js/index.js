@@ -2,6 +2,30 @@ activateTooltips();
 addDropdownItemsListeners();
 addSearchFieldListener();
 
+function activateTooltips() {
+  const tooltipTriggerList = document.querySelectorAll(
+    '[data-bs-toggle="tooltip"]'
+  );
+  const tooltipList = [...tooltipTriggerList].map(
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
+}
+
+function addDropdownItemsListeners() {
+  const dropdownItems = document.querySelectorAll(".dropdown-item");
+
+  dropdownItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const searchTextfield = document.querySelector("#search-input");
+      const searchType = item.innerHTML;
+      const searchBtn = document.querySelector("#search-button");
+      searchBtn.innerHTML = searchType;
+      updateInfoTooltip(searchType);
+      setSearchSubmitBtnEnable(searchTextfield, searchBtn);
+    });
+  });
+}
+
 function addSearchFieldListener() {
   const searchTextfield = document.querySelector("#search-input");
   searchTextfield.addEventListener("input", function (evt) {
@@ -20,30 +44,6 @@ function setSearchSubmitBtnEnable(searchTextField, searchBtn) {
   } else if (searchBtnText != "Find country by") {
     searchSubmitBtn.removeAttribute("disabled");
   }
-}
-
-function addDropdownItemsListeners() {
-  const dropdownItems = document.querySelectorAll(".dropdown-item");
-
-  dropdownItems.forEach((item) => {
-    item.addEventListener("click", () => {
-      const searchTextfield = document.querySelector("#search-input")
-      const searchType = item.innerHTML;
-      const searchBtn = document.querySelector("#search-button");
-      searchBtn.innerHTML = searchType;
-      updateInfoTooltip(searchType);
-      setSearchSubmitBtnEnable(searchTextfield, searchBtn);
-    });
-  });
-}
-
-function activateTooltips() {
-  const tooltipTriggerList = document.querySelectorAll(
-    '[data-bs-toggle="tooltip"]'
-  );
-  const tooltipList = [...tooltipTriggerList].map(
-    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
-  );
 }
 
 function updateInfoTooltip(searchType) {
@@ -86,4 +86,40 @@ function updateInfoTooltip(searchType) {
 
   const tooltipBtn = document.querySelector("#tooltip-button");
   tooltipBtn.setAttribute("data-bs-original-title", tooltipText);
+}
+
+function submitSearch() {
+  const searchHost = "https://restcountries.com/v3.1/";
+  const searchBtn = document.querySelector("#search-button");
+  const searchType = searchBtn.innerHTML;
+  const searchText = document.querySelector("#search-input").value.replace(/ /g,"%20");
+  let searchEndpoint;
+  switch (searchType) {
+    case "Code":
+      searchEndpoint = `alpha/${searchText}`;
+      break;
+    case "Currency":
+      searchEndpoint = `currency/${searchText}`;
+      break;
+    case "Language":
+      searchEndpoint = `lang/${searchText}`;
+      break;
+    case "Capital city":
+      searchEndpoint = `capital/${searchText}`;
+      break;
+    case "Region":
+      searchEndpoint = `region/${searchText}`;
+      break;
+    case "Subregion":
+      searchEndpoint = `subregion/${searchText}`;
+      break;
+    case "Denonym":
+      searchEndpoint = `denonym/${searchText}`;
+      break;
+    default:
+      searchEndpoint = `name/${searchText}`;
+      break;
+  }
+  const searchUri = searchHost + searchEndpoint;
+  console.log(searchUri);
 }

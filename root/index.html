@@ -54,7 +54,12 @@
               aria-label="Search"
               id="search-input"
             />
-            <button class="btn btn-light" type="submit" disabled id="search-submit-btn">
+            <button
+              class="btn btn-light"
+              disabled
+              id="search-submit-btn"
+              onclick="submitSearch()"
+            >
               <img src="img/airplane.png" alt="Logo" width="50" height="50" />
             </button>
           </form>
@@ -98,6 +103,32 @@
           </button>
         </div>
       </div>
+    </div>
+    <div
+      id="countryCarousel"
+      class="carousel slide carousel-dark"
+      data-bs-ride="true"
+    >
+      <div class="carousel-indicators"></div>
+      <div class="carousel-inner"></div>
+      <button
+        class="carousel-control-prev d-none"
+        type="button"
+        data-bs-target="#countryCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next d-none"
+        type="button"
+        data-bs-target="#countryCarousel"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
     </div>
   </body>
 </html>
