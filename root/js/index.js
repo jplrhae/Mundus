@@ -150,8 +150,37 @@ function generateCountryCarousel(countryData) {
     countryCountFlavor.innerText = `Mundus found ${countryCount} country.`;
   }
   countryCountFlavor.classList.remove('d-none');
-  countryData.forEach((element) => {
-    countryName = element.name.common;
+  countryData.forEach((country) => {
+    const countryInfo = {
+      name: {
+        official: country.name.official,
+        common: country.name.common
+      },
+      codes: {
+        cca2: country.cca2,
+        ccn3: country.ccn3,
+        cca3: country.cca3,
+        cioc: country.cioc
+      },
+      independent: country.independent,
+      unMember: country.unMember,
+      currencies: country.currencies,
+      capital: country.capital,
+      region: country.region,
+      subregion: country.subregion,
+      languages: country.languages,
+      latlng: country.latlng,
+      denonyms: country.denonyms,
+      googleMaps: country.maps.googleMaps,
+      population: country.population,
+      timezones: country.timezones,
+      continents: country.continents,
+      pngFlag: country.flags.png,
+      pngCoatOfArms: country.coatOfArms.png
+    };
+
+    
+
     console.log(countryName);
   });
 }
