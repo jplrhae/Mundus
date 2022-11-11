@@ -23,22 +23,21 @@
     ></script>
     <link rel="stylesheet" href="css/index.css" />
     <script defer src="js/index.js"></script>
+    <link rel="shortcut icon" href="img/mundus-logo2.png" type="image/x-icon" />
     <title>Mundus</title>
   </head>
-  <body>
+  <body style="color: white !important">
     <nav class="navbar border-bottom border-dark border-3">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#" style="font-size: 70px">
+        <a class="navbar-brand" href="#" style="font-size: 60px; color: white">
           <img
-            src="img/mundus-logo.png"
+            src="img/mundus-logo2.png"
             alt="Logo"
-            width="90"
-            height="90"
+            width="70"
+            height="70"
             class="d-inline-block align-text-top"
           />
-          Mundus<span style="font-size: 45px"
-            >, your personal guide to planet Earth.</span
-          >
+          Mundus<span style="font-size: 35px">, the Earth explorer.</span>
         </a>
       </div>
     </nav>
@@ -104,15 +103,43 @@
         </div>
       </div>
     </div>
+    <div id="country-count-flavor" class="h4 mt-4 text-center d-none">
+      Mundus found 80 countries.
+    </div>
     <div
       id="countryCarousel"
-      class="carousel slide carousel-dark"
-      data-bs-ride="true"
+      class="carousel slide carousel-light mt-4"
+      data-bs-ride="false"
     >
-      <div class="carousel-indicators"></div>
-      <div class="carousel-inner"></div>
+      <div class="carousel-indicators">
+        <button
+          type="button"
+          data-bs-target="#countryCarousel"
+          data-bs-slide-to="0"
+          class="active"
+          aria-current="true"
+          aria-label="Slide 1"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#countryCarousel"
+          data-bs-slide-to="1"
+          aria-label="Slide 2"
+        ></button>
+        <button
+          type="button"
+          data-bs-target="#countryCarousel"
+          data-bs-slide-to="2"
+          aria-label="Slide 3"
+        ></button>
+      </div>
+      <div class="carousel-inner text-center">
+        <div class="carousel-item active">Brazil</div>
+        <div class="carousel-item">United Kingdom</div>
+        <div class="carousel-item">Peru</div>
+      </div>
       <button
-        class="carousel-control-prev d-none"
+        class="carousel-control-prev"
         type="button"
         data-bs-target="#countryCarousel"
         data-bs-slide="prev"
@@ -121,7 +148,7 @@
         <span class="visually-hidden">Previous</span>
       </button>
       <button
-        class="carousel-control-next d-none"
+        class="carousel-control-next"
         type="button"
         data-bs-target="#countryCarousel"
         data-bs-slide="next"

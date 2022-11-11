@@ -92,7 +92,9 @@ function submitSearch() {
   const searchHost = "https://restcountries.com/v3.1/";
   const searchBtn = document.querySelector("#search-button");
   const searchType = searchBtn.innerHTML;
-  const searchText = document.querySelector("#search-input").value.replace(/ /g,"%20");
+  const searchText = document
+    .querySelector("#search-input")
+    .value.replace(/ /g, "%20");
   let searchEndpoint;
   switch (searchType) {
     case "Code":
@@ -121,5 +123,35 @@ function submitSearch() {
       break;
   }
   const searchUri = searchHost + searchEndpoint;
-  console.log(searchUri);
+  fetch(searchUri)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+
+      if (data.status == 404) {
+        let countryCountFlavor = document.querySelector(
+          "#country-count-flavor"
+        );
+        countryCountFlavor.innerText =
+          "Mundus didn't find any countries matching your search.";
+        countryCountFlavor.classList.remove('d-none');
+      } else {
+        generateCountryCarousel(data);
+      }
+    });
+}
+
+function generateCountryCarousel(countryData) {
+  let countryCountFlavor = document.querySelector("#country-count-flavor");
+  let countryCount = countryData.length;
+  if (countryCount > 1) {
+    countryCountFlavor.innerText = `Mundus found ${countryCount} countries.`;
+  } else {
+    countryCountFlavor.innerText = `Mundus found ${countryCount} country.`;
+  }
+  countryCountFlavor.classList.remove('d-none');
+  countryData.forEach((element) => {
+    countryName = element.name.common;
+    console.log(countryName);
+  });
 }
