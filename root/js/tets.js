@@ -12034,3 +12034,5 @@ var json = [
     }
   }
 ];
+
+console.log(json[0].currencies);

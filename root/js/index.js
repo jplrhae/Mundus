@@ -115,8 +115,8 @@ function submitSearch() {
     case "Subregion":
       searchEndpoint = `subregion/${searchText}`;
       break;
-    case "Denonym":
-      searchEndpoint = `denonym/${searchText}`;
+    case "Demonym":
+      searchEndpoint = `demonym/${searchText}`;
       break;
     default:
       searchEndpoint = `name/${searchText}`;
@@ -134,7 +134,7 @@ function submitSearch() {
         );
         countryCountFlavor.innerText =
           "Mundus didn't find any countries matching your search.";
-        countryCountFlavor.classList.remove('d-none');
+        countryCountFlavor.classList.remove("d-none");
       } else {
         generateCountryCarousel(data);
       }
@@ -149,38 +149,211 @@ function generateCountryCarousel(countryData) {
   } else {
     countryCountFlavor.innerText = `Mundus found ${countryCount} country.`;
   }
-  countryCountFlavor.classList.remove('d-none');
+  countryCountFlavor.classList.remove("d-none");
+  let countryIndex = 0;
   countryData.forEach((country) => {
     const countryInfo = {
       name: {
         official: country.name.official,
-        common: country.name.common
+        common: country.name.common,
       },
+      pngFlag: country.flags.png,
+      pngCoatOfArms: country.coatOfArms.png,
       codes: {
         cca2: country.cca2,
         ccn3: country.ccn3,
         cca3: country.cca3,
-        cioc: country.cioc
+        cioc: country.cioc,
       },
       independent: country.independent,
       unMember: country.unMember,
+      demonyms: country.demonyms.eng.m,
       currencies: country.currencies,
-      capital: country.capital,
+      capital: country.capital[0],
       region: country.region,
+      googleMaps: country.maps.googleMaps,
       subregion: country.subregion,
       languages: country.languages,
       latlng: country.latlng,
-      denonyms: country.denonyms,
-      googleMaps: country.maps.googleMaps,
       population: country.population,
-      timezones: country.timezones,
-      continents: country.continents,
-      pngFlag: country.flags.png,
-      pngCoatOfArms: country.coatOfArms.png
+      timezones: country.timezones[0],
+      continents: country.continents[0],
     };
+    let dependency = countryInfo.independent
+      ? "Independent"
+      : "Not independent";
+    let dependencyImageUrl = `img/${
+      countryInfo.independent ? "independent" : "dependent"
+    }.png`;
+    let unMembership = countryInfo.unMember ? "UN member" : "Not a UN member";
+    let unMembershipImageUrl = `img/${
+      countryInfo.unMember ? "un" : "not-un"
+    }.png`;
+    let currencyName = Object.values(countryInfo.currencies)[0].name;
+    let currencySymbol = Object.values(countryInfo.currencies)[0].symbol;
+    let languageName = Object.values(countryInfo.languages)[0];
 
-    
-
-    console.log(countryName);
+    let carouselItem = document.createElement("div");
+    if (countryIndex == 0) {
+      carouselItem.className = "carousel-item active";
+    } else {
+      carouselItem.className = "carousel-item";
+    }
+    carouselItem.innerHTML = `<div class="container-fluid">
+      <div class="row">
+        <div class="col-4 text-end">
+          <img
+            src="${countryInfo.pngCoatOfArms}"
+            alt="country_coat_of_arms"
+            height="100"
+          />
+        </div>
+        <div class="col-4" style="font-size: 70px">${countryInfo.name.official}</div>
+        <div class="col-4 text-start">
+          <img
+            src="${countryInfo.pngCoatOfArms}"
+            alt="country_coat_of_arms"
+            height="100"
+          />
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-4 text-end" style="font-size: 25px">
+          <div class="container">
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <span class="border-bottom">${countryInfo.codes.cca2}</span>
+                  </div>
+                </div>
+                <div class="row" style="font-size: 20px;">
+                  <div class="col-12">
+                    cca2
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <span class="border-bottom">${countryInfo.codes.ccn3}</span>
+                  </div>
+                </div>
+                <div class="row" style="font-size: 20px;">
+                  <div class="col-12">
+                    ccn3
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <img
+            src="${countryInfo.pngFlag}"
+            height="100"
+            alt="country_flag"
+          />
+        </div>
+        <div class="col-4 text-start" style="font-size: 25px">
+          <div class="container">
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <span class="border-bottom">${countryInfo.codes.cca3}</span>
+                  </div>
+                </div>
+                <div class="row" style="font-size: 20px;">
+                  <div class="col-12">
+                    cca3
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="container">
+                <div class="row">
+                  <div class="col-12">
+                    <span class="border-bottom">${countryInfo.codes.cioc}</span>
+                  </div>
+                </div>
+                <div class="row" style="font-size: 20px;">
+                  <div class="col-12">
+                    cioc
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="col-12 text-center">
+          [${countryInfo.latlng[0]}, ${countryInfo.latlng[1]}]
+        </div>
+      </div>
+      <div class="row mt-3" style="font-size:20px;">
+        <div class="col-4">
+          <img src="${dependencyImageUrl}" alt="dependency-icon" height="50">
+          <span class='ms-3'>${dependency}</span>
+        </div>
+        <div class="col-4 mt-2">
+          ${countryInfo.name.common} demonym: <strong>${countryInfo.demonyms}</strong>.
+        </div>
+        <div class="col-4">
+          <span class='me-3'>${unMembership}</span>
+          <img src="${unMembershipImageUrl}" alt="un-icon" height="50">
+        </div>
+      </div>
+      <div class="row mt-4" style="font-size:20px;">
+        <div class="col-4">
+          <img src="img/currency.png" alt="currency-icon" height="50">
+          <span class='ms-3'>${currencyName} (${currencySymbol})</span>
+        </div>
+        <div class="col-4 ">
+          <img src="img/capital.png" alt="capital-icon" height="50">
+          <span class="ms-2">${countryInfo.name.common}'s capital is <strong>${countryInfo.capital}</strong>.</span>
+          
+        </div>
+        <div class="col-4">
+          <span class='me-3'>${languageName}</span>
+          <img src="img/language.png" alt="language-icon" height="50">
+        </div>
+      </div>
+      <div class="row mt-5" style="font-size:20px;">
+        <div class="col-4 align-self-center">
+          <img src="img/region.png" alt="region-icon" height="50">
+          <span class='ms-3'>${countryInfo.region}</span>
+        </div>
+        <div class="col-4 ">
+          <iframe width="500" height="500" style="border:1px solid white; border-radius: 50px;" loading="lazy" allowfullscreen
+          src="https://www.google.com/maps/embed/v1/place?q=${encodeURI(countryInfo.name.common)}&key=AIzaSyB-DIyUKOSzWMrf_a_tizF3Za-U3B945bg"></iframe>
+        </div>
+        <div class="col-4 align-self-center">
+          <span class='me-3'>${countryInfo.subregion}</span>
+          <img src="img/subregion.png" alt="subregion-icon" height="50">
+        </div>
+      </div>
+      <div class="row mt-4" style="font-size:20px;" >
+        <div class="col-4">
+          <img src="img/population.png" alt="population-icon" height="50">
+          <span class='ms-3'>${countryInfo.population} people</span>
+        </div>
+        <div class="col-4 ">
+          <img src="img/continent.png" alt="continent-icon" height="50">
+          <span class="ms-2">${countryInfo.continents}</span>
+        </div>
+        <div class="col-4">
+          <span class='me-3'>${countryInfo.timezones}</span>
+          <img src="img/timezone.png" alt="timezone-icon" height="50">
+        </div>
+      </div>
+    </div>`;
+    const carouselContainer = document.querySelector("#carousel-container");
+    carouselContainer.appendChild(carouselItem);
+    countryIndex++;
   });
 }
