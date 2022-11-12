@@ -23,7 +23,7 @@
     ></script>
     <link rel="stylesheet" href="css/index.css" />
     <script defer src="js/index.js"></script>
-    <link rel="shortcut icon" href="img/mundus-logo2.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="img/mundus-logo-map.png" type="image/x-icon" id="mundus-favicon"/>
     <title>Mundus</title>
   </head>
   <body style="color: white !important">
@@ -31,13 +31,14 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="#" style="font-size: 60px; color: white">
           <img
-            src="img/mundus-logo2.png"
+            src="img/mundus-logo-map.png"
             alt="Logo"
             width="70"
             height="70"
             class="d-inline-block align-text-top"
+            id="mundus-logo"
           />
-          Mundus<span style="font-size: 35px">, the Earth explorer.</span>
+          Mundus<span style="font-size: 35px">, Earth explorer.</span>
         </a>
       </div>
     </nav>
@@ -59,10 +60,11 @@
               id="search-submit-btn"
               onclick="submitSearch()"
             >
-              <img src="img/airplane.png" alt="Logo" width="50" height="50" />
+              <img src="img/map-search-icon.png" alt="Logo" width="50" height="50" id="search-button-icon"/>
             </button>
           </form>
         </div>
+
         <div class="col-4"></div>
       </div>
       <div class="row mt-3 text-center">
@@ -90,53 +92,49 @@
           </div>
         </div>
         <div class="col text-start ps-1">
-          <button
-            type="button"
-            class="btn"
-            data-bs-toggle="tooltip"
-            data-bs-placement="top"
-            title="Select the type of search you want to do."
-            id="tooltip-button"
-          >
-            <img src="img/info.png" alt="info" width="25" height="25" />
-          </button>
+          <div class="container">
+            <div class="row">
+              <div class="col-2">
+                <button
+                  type="button"
+                  class="btn"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Select the type of search you want to do."
+                  id="tooltip-button"
+                >
+                  <img src="img/info.png" alt="info" width="25" height="25" />
+                </button>
+              </div>
+              <div class="col align-self-center">
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    id="flexSwitchTheme"
+                    selectedTheme="map"
+                    onclick="toggleThemes(this)"
+                  />
+                  <label class="form-check-label" for="flexSwitchCheckDefault"
+                    >Toggle map/world themes</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div id="country-count-flavor" class="h4 mt-4 text-center">
-      Mundus found 3 countries.
-    </div>
+    <div id="country-count-flavor" class="h4 mt-4 text-center d-none"></div>
     <div
       id="countryCarousel"
       class="carousel slide carousel-light mt-4"
       style="background: rgba(0, 0, 0, 0.6)"
       data-bs-ride="false"
     >
-      <div class="carousel-indicators">
-        <button
-          type="button"
-          data-bs-target="#countryCarousel"
-          data-bs-slide-to="0"
-          class="active"
-          aria-current="true"
-          aria-label="Slide 1"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#countryCarousel"
-          data-bs-slide-to="1"
-          aria-label="Slide 2"
-        ></button>
-        <button
-          type="button"
-          data-bs-target="#countryCarousel"
-          data-bs-slide-to="2"
-          aria-label="Slide 3"
-        ></button>
-      </div>
-      <div class="carousel-inner text-center" id="carousel-container">
-
-      </div>
+      <div class="carousel-indicators" id="carousel-indicators-container"></div>
+      <div class="carousel-inner text-center" id="carousel-container"></div>
       <button
         class="carousel-control-prev"
         type="button"

@@ -134,6 +134,14 @@ function submitSearch() {
         );
         countryCountFlavor.innerText =
           "Mundus didn't find any countries matching your search.";
+        const carouselContainer = document.querySelector("#carousel-container");
+        const carouselIndicatorContainers = document.querySelector(
+          "#carousel-indicators-container"
+        );
+        if (carouselContainer.hasChildNodes()) {
+          deleteChildren(carouselContainer);
+          deleteChildren(carouselIndicatorContainers);
+        }
         countryCountFlavor.classList.remove("d-none");
       } else {
         generateCountryCarousel(data);
@@ -151,6 +159,14 @@ function generateCountryCarousel(countryData) {
   }
   countryCountFlavor.classList.remove("d-none");
   let countryIndex = 0;
+  const carouselContainer = document.querySelector("#carousel-container");
+  const carouselIndicatorContainers = document.querySelector(
+    "#carousel-indicators-container"
+  );
+  if (carouselContainer.hasChildNodes()) {
+    deleteChildren(carouselContainer);
+    deleteChildren(carouselIndicatorContainers);
+  }
   countryData.forEach((country) => {
     const countryInfo = {
       name: {
@@ -208,7 +224,9 @@ function generateCountryCarousel(countryData) {
             height="100"
           />
         </div>
-        <div class="col-4" style="font-size: 70px">${countryInfo.name.official}</div>
+        <div class="col-4" style="font-size: 70px">${
+          countryInfo.name.official
+        }</div>
         <div class="col-4 text-start">
           <img
             src="${countryInfo.pngCoatOfArms}"
@@ -301,7 +319,9 @@ function generateCountryCarousel(countryData) {
           <span class='ms-3'>${dependency}</span>
         </div>
         <div class="col-4 mt-2">
-          ${countryInfo.name.common} demonym: <strong>${countryInfo.demonyms}</strong>.
+          ${countryInfo.name.common} demonym: <strong>${
+      countryInfo.demonyms
+    }</strong>.
         </div>
         <div class="col-4">
           <span class='me-3'>${unMembership}</span>
@@ -315,7 +335,9 @@ function generateCountryCarousel(countryData) {
         </div>
         <div class="col-4 ">
           <img src="img/capital.png" alt="capital-icon" height="50">
-          <span class="ms-2">${countryInfo.name.common}'s capital is <strong>${countryInfo.capital}</strong>.</span>
+          <span class="ms-2">${countryInfo.name.common}'s capital is <strong>${
+      countryInfo.capital
+    }</strong>.</span>
           
         </div>
         <div class="col-4">
@@ -329,8 +351,10 @@ function generateCountryCarousel(countryData) {
           <span class='ms-3'>${countryInfo.region}</span>
         </div>
         <div class="col-4 ">
-          <iframe width="500" height="500" style="border:1px solid white; border-radius: 50px;" loading="lazy" allowfullscreen
-          src="https://www.google.com/maps/embed/v1/place?q=${encodeURI(countryInfo.name.common)}&key=AIzaSyB-DIyUKOSzWMrf_a_tizF3Za-U3B945bg"></iframe>
+          <iframe width="500" height="500" style="border:1px solid white; border-radius: 20px;" loading="lazy" allowfullscreen
+          src="https://www.google.com/maps/embed/v1/place?q=${encodeURI(
+            countryInfo.name.common
+          )}&key=AIzaSyB-DIyUKOSzWMrf_a_tizF3Za-U3B945bg"></iframe>
         </div>
         <div class="col-4 align-self-center">
           <span class='me-3'>${countryInfo.subregion}</span>
@@ -352,8 +376,63 @@ function generateCountryCarousel(countryData) {
         </div>
       </div>
     </div>`;
-    const carouselContainer = document.querySelector("#carousel-container");
     carouselContainer.appendChild(carouselItem);
+
+    const newIndicatorButton = document.createElement("button");
+    newIndicatorButton.setAttribute("type", "button");
+    newIndicatorButton.setAttribute("data-bs-target", "#countryCarousel");
+    newIndicatorButton.setAttribute("data-bs-slide-to", `${countryIndex}`);
+    if (countryIndex == 0) {
+      newIndicatorButton.setAttribute("class", "active");
+      newIndicatorButton.setAttribute("aria-current", "true");
+    }
+    newIndicatorButton.setAttribute("aria-label", `Slide ${countryIndex + 1}`);
+    carouselIndicatorContainers.appendChild(newIndicatorButton);
     countryIndex++;
   });
+}
+
+function deleteChildren(elem) {
+  let elemChild = elem.lastElementChild;
+  while (elemChild) {
+    elem.removeChild(elemChild);
+    elemChild = elem.lastElementChild;
+  }
+}
+
+function toggleThemes(elem) {
+  if (elem.getAttribute("selectedTheme") == "map") {
+    elem.setAttribute("selectedTheme", "world");
+  } else {
+    elem.setAttribute("selectedTheme", "map");
+  }
+
+  let selectedTheme = elem.getAttribute("selectedTheme");
+  if (selectedTheme == "world") {
+    document.body.style.backgroundImage = 'url("img/world-background.jpg")';
+    changeFavicon("img/mundus-logo-world.png");
+    const mundusLogo = document.querySelector("#mundus-logo");
+    mundusLogo.src = "img/mundus-logo-world.png";
+    const searchButtonIcon = document.querySelector("#search-button-icon");
+    searchButtonIcon.src = "img/space-search-icon.png";
+  } else if (selectedTheme == "map") {
+    document.body.style.backgroundImage = 'url("img/map-background.jpg")';
+    changeFavicon("img/mundus-logo-map.png");
+    const mundusLogo = document.querySelector("#mundus-logo");
+    mundusLogo.src = "img/mundus-logo-map.png";
+    const searchButtonIcon = document.querySelector("#search-button-icon");
+    searchButtonIcon.src = "img/map-search-icon.png";
+  }
+}
+
+function changeFavicon(src) {
+  var link = document.createElement("link"),
+    oldLink = document.getElementById("mundus-favicon");
+  link.id = "mundus-favicon";
+  link.rel = "shortcut icon";
+  link.href = src;
+  if (oldLink) {
+    document.head.removeChild(oldLink);
+  }
+  document.head.appendChild(link);
 }
